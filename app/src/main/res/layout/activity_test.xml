@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="🌿 食材相关操作"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btn_add_food"
+            android:text="➕ 添加食材"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btn_get_foods"
+            android:text="📦 获取所有食材"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btn_delete_food"
+            android:text="❌ 删除指定食材"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:text="🍳 菜单相关操作"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btn_add_menu"
+            android:text="🍲 添加菜单"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_get_menus"
+            android:text="📋 获取所有菜单"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btn_insert_sample"
+            android:text="📦 插入测试数据"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:text="👥 小组相关操作"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btn_create_group"
+            android:text="👤 创建小组"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_get_group_members"
+            android:text="🧑‍🤝‍🧑 获取组成员"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/txt_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="👇 操作结果："
+            android:textSize="14sp"
+            android:paddingTop="24dp"
+            android:textColor="#444444" />
+    </LinearLayout>
+</ScrollView>

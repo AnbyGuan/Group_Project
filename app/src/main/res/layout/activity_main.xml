@@ -67,5 +67,12 @@
         android:textSize="14sp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp" />
+    <Button
+        android:id="@+id/btn_admin_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="进入数据库管理模式"
+        android:layout_marginTop="20dp"/>
+
 
 </RelativeLayout>

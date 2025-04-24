@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "564161498492",
+    "project_id": "sharedfridgeapp",
+    "storage_bucket": "sharedfridgeapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564161498492:android:145637ffd9142124ae68f9",
+        "android_client_info": {
+          "package_name": "hk.hku.group_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASx3nS3mpNJq9478aC8J90DQL69pZwzzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
