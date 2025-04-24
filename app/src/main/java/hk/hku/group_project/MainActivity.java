@@ -6,62 +6,73 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import com.google.firebase.FirebaseApp;
 
-//public class MainActivity extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
-//        setContentView(R.layout.activity_main);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
-//    }
-//}
-public class MainActivity extends Activity implements View.OnClickListener{
+import hk.hku.group_project.database.DatabaseHelper;
+import hk.hku.group_project.database.FirebaseCallback;
+import hk.hku.group_project.database.TestActivity;
 
+public class MainActivity extends Activity {
 
     EditText txt_UserName, txt_UserPW;
-    Button btn_Login;
-
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        btn_Login = (Button)findViewById(R.id.btn_Login);
-        txt_UserName = (EditText)findViewById(R.id.txt_UserName);
-        txt_UserPW = (EditText)findViewById(R.id.txt_UserPW);
-
-        // Register the Login button to click listener
-        // Whenever the button is clicked, onClick is called
-        btn_Login.setOnClickListener(this);
-    }
+    Button btn_Login, btn_Admin;
+    TextView txtGoRegister;
 
     @Override
-    public void onClick(View v) {
-        // TODO Auto-generated method stub
-        if (v.getId() == R.id.btn_Login) {
-            String uname = txt_UserName.getText().toString();
-            String upassword = txt_UserPW.getText().toString();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
 
-            System.out.println( "@@@@@@@@@@@@@@@\n" +
-                    "The Portal ID is: " + uname + "\n" +
-                    "The Password is: " + upassword + "\n" +
-                    "@@@@@@@@@@@@@@@" );
-            Intent intent = new Intent(getBaseContext(), MainPage.class);
+        setContentView(R.layout.activity_main);
+
+        txt_UserName = findViewById(R.id.txt_UserName);
+        txt_UserPW = findViewById(R.id.txt_UserPW);
+        btn_Login = findViewById(R.id.btn_Login);
+        btn_Admin = findViewById(R.id.btn_admin_mode); // 在 layout 中添加一个按钮 id=btn_admin_mode
+
+        btn_Login.setOnClickListener(v -> handleLogin());
+
+        btn_Admin.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, TestActivity.class);
             startActivity(intent);
-            finish();
-        }
+        });
+        txtGoRegister = findViewById(R.id.link_to_register);
+        txtGoRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
+
     }
 
+    private void handleLogin() {
+        String username = txt_UserName.getText().toString().trim();
+        String password = txt_UserPW.getText().toString().trim();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "请输入用户名和密码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseHelper.verifyLogin(username, password, new FirebaseCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean success) {
+                if (success) {
+                    Toast.makeText(MainActivity.this, "✅ 登录成功", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, MainPage.class); // 登录成功跳转主界面
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(MainActivity.this, "❌ 用户名或密码错误", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Toast.makeText(MainActivity.this, "⚠️ 登录失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }
