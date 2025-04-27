@@ -240,6 +240,29 @@ public class DatabaseHelper {
         });
     }
 
+        // Get a ONE group that a user belongs to
+        public static void getUserGroup(String userId, FirebaseCallback<String> callback) {
+            DatabaseReference ref = db.getReference("user_groups").child(userId);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
+                        // Get the first (and only) group key since users can only be in one group
+                        String groupId = snapshot.getChildren().iterator().next().getKey();
+                        callback.onSuccess(groupId);
+                    } else {
+                        // User has no group
+                        callback.onSuccess(null);
+                    }
+                }
+    
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    callback.onFailure(error.toException());
+                }
+            });
+        }
+
     // 检查小组是否存在
     public static void checkGroupExists(String groupId, FirebaseCallback<Boolean> callback) {
         DatabaseReference ref = db.getReference("groups").child(groupId);
