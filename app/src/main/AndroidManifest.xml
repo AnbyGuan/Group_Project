@@ -29,6 +29,9 @@
             android:name=".New_Group"
             android:exported="false" />
         <activity
+            android:name=".GroupDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainPage"
             android:exported="false" />
         <activity android:name=".database.TestActivity" />

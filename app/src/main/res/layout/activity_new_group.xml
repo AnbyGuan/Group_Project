@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,16 +14,159 @@
         android:src="@drawable/bg"
         android:alpha="0.2"/>
 
-    <EditText
-        android:id="@+id/txt_Search"
-        android:layout_width="380dp"
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/rounded_corner"
-        android:hint="Search"
-        android:importantForAccessibility="yes"
-        android:padding="10dp"
-        android:textColorHint="#B0B0B0" />
+        android:layout_marginTop="30dp"
+        android:text="Group Management"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"/>
+
+    <!-- Search Group Section -->
+    <LinearLayout
+        android:id="@+id/search_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_title"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search Group"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#333333"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/txt_search_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:hint="Enter group ID"
+                android:importantForAccessibility="yes"
+                android:padding="10dp"
+                android:textColorHint="#B0B0B0" />
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Search"
+                android:backgroundTint="#4CAF50"/>
+        </LinearLayout>
+
+        <!-- Search Results -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_search_results"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"
+            android:background="#F5F5F5"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <!-- Create Group Section -->
+    <LinearLayout
+        android:id="@+id/create_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_section"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create New Group"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#333333"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/txt_create_group_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:hint="Enter new group ID"
+                android:importantForAccessibility="yes"
+                android:padding="10dp"
+                android:textColorHint="#B0B0B0" />
+
+            <Button
+                android:id="@+id/btn_create_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Create"
+                android:backgroundTint="#2196F3"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- My Groups Section -->
+    <LinearLayout
+        android:id="@+id/my_groups_section"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/create_section"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Groups"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#333333"/>
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_my_groups"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:background="#F5F5F5"/>
+
+        <TextView
+            android:id="@+id/txt_no_groups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You haven't joined any groups yet."
+            android:gravity="center"
+            android:padding="16dp"
+            android:textColor="#888888"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>
