@@ -1,5 +1,6 @@
 package hk.hku.group_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -101,6 +102,13 @@ public class GroupDetailsActivity extends AppCompatActivity {
                 }
 
                 txtMemberCount.setText(members.size() + " members");
+
+                // Hide leave button if user is not a member
+                if (!members.contains(currentUserId)) {
+                    btnLeaveGroup.setVisibility(View.GONE);
+                } else {
+                    btnLeaveGroup.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -133,6 +141,11 @@ public class GroupDetailsActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (success) {
                     Toast.makeText(GroupDetailsActivity.this, "Successfully left the group", Toast.LENGTH_SHORT).show();
+
+                    // Navigate back to New_Group screen to see updated state
+                    Intent intent = new Intent(GroupDetailsActivity.this, New_Group.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                     finish();
                 } else {
                     Toast.makeText(GroupDetailsActivity.this, "Failed to leave the group", Toast.LENGTH_SHORT).show();

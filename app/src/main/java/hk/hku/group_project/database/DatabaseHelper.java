@@ -255,4 +255,21 @@ public class DatabaseHelper {
             }
         });
     }
+
+    // Check if user is already in a group
+    public static void isUserInAnyGroup(String userId, FirebaseCallback<Boolean> callback) {
+        DatabaseReference ref = db.getReference("user_groups").child(userId);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // If the user has any groups, return true
+                callback.onSuccess(snapshot.exists() && snapshot.getChildrenCount() > 0);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onFailure(error.toException());
+            }
+        });
+    }
 }

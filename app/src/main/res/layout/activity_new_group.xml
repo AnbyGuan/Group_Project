@@ -25,23 +25,33 @@
         android:textStyle="bold"
         android:textColor="#333333"/>
 
-    <!-- Search Group Section -->
+    <!-- No Group Container - Shown when user has no group -->
     <LinearLayout
-        android:id="@+id/search_section"
+        android:id="@+id/no_group_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/txt_title"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You are not a member of any group yet."
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Search Group Section -->
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search Group"
+            android:text="Join a Group"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#333333"/>
+            android:textColor="#333333"
+            android:layout_marginTop="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,25 +87,16 @@
             android:layout_marginTop="8dp"
             android:background="#F5F5F5"
             android:visibility="gone"/>
-    </LinearLayout>
 
-    <!-- Create Group Section -->
-    <LinearLayout
-        android:id="@+id/create_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/search_section"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        android:padding="16dp">
-
+        <!-- Create Group Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create New Group"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#333333"/>
+            android:textColor="#333333"
+            android:layout_marginTop="30dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,42 +125,114 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- My Groups Section -->
+    <!-- Has Group Container - Shown when user has a group -->
+    <LinearLayout
+        android:id="@+id/has_group_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_title"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Group"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_group_id_display"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Group ID: [Group Name]"
+                            android:textSize="16sp"
+                            android:textColor="#333333"/>
+
+                        <TextView
+                            android:id="@+id/txt_member_count_display"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Members: 0"
+                            android:textSize="14sp"
+                            android:layout_marginTop="4dp"
+                            android:textColor="#666666"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_view_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View Details"
+                        android:backgroundTint="#2196F3"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_section"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/create_section"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:id="@+id/my_groups_section"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/create_section"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="My Groups"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#333333"/>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone">
         
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_groups"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="8dp"
-            android:background="#F5F5F5"/>
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
 
         <TextView
             android:id="@+id/txt_no_groups"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="You haven't joined any groups yet."
-            android:gravity="center"
-            android:padding="16dp"
-            android:textColor="#888888"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:visibility="gone"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_user_in_group_message"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"/>
 
     <!-- Progress Bar -->
     <ProgressBar
