@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    //按钮
-
     <ImageView
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -14,6 +12,20 @@
         android:layout_marginTop="-3dp"
         android:scaleType="centerCrop"
         android:src="@drawable/main_page" />
+
+    <!-- Add Logout Button at the top right -->
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="#F44336"
+        android:onClick="Logout"
+        android:padding="8dp"
+        android:text="Logout"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/button1"
