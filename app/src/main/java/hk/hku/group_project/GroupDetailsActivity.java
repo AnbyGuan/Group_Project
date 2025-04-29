@@ -140,6 +140,9 @@ public class GroupDetailsActivity extends AppCompatActivity {
             public void onSuccess(Boolean success) {
                 progressBar.setVisibility(View.GONE);
                 if (success) {
+                    // Clear group ID from local storage
+                    userSession.clearGroupId();
+
                     Toast.makeText(GroupDetailsActivity.this, "Successfully left the group", Toast.LENGTH_SHORT).show();
 
                     // Navigate back to New_Group screen to see updated state
