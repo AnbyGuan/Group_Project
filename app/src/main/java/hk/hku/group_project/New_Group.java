@@ -37,6 +37,11 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
     private TextView txtNoGroups, txtUserInGroupMessage, txtGroupIdDisplay, txtMemberCountDisplay;
     private LinearLayout searchSection, createSection, noGroupContainer, hasGroupContainer;
 
+    // TODO FOR TESTING
+    private Button btnTestGetGroupId;
+    private TextView txtTestGroupId;
+    // END TODO FOR TESTING
+
     private GroupAdapter searchAdapter;
     private GroupAdapter myGroupsAdapter;
     private UserSession userSession;
@@ -124,6 +129,15 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
         createSection = findViewById(R.id.create_section);
         noGroupContainer = findViewById(R.id.no_group_container);
         hasGroupContainer = findViewById(R.id.has_group_container);
+
+        // TODO FOR TESTING
+        // Initialize test elements
+        btnTestGetGroupId = findViewById(R.id.btn_test_get_group_id);
+        txtTestGroupId = findViewById(R.id.txt_test_group_id);
+
+        // Set up test button click listener
+        btnTestGetGroupId.setOnClickListener(v -> displayCurrentGroupId());
+        // END TODO FOR TESTING
     }
 
     @Override
@@ -286,6 +300,10 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
                                     Toast.makeText(New_Group.this, "Group created successfully", Toast.LENGTH_SHORT)
                                             .show();
                                     txtCreateGroupId.setText("");
+
+                                    // Save the group ID to local storage
+                                    userSession.saveGroupId(groupId);
+
                                     checkIfUserInGroup(); // Re-check and update UI
                                 }
 
@@ -411,6 +429,10 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
                     Toast.makeText(New_Group.this, "Successfully joined group " + groupId, Toast.LENGTH_SHORT).show();
                     recyclerSearchResults.setVisibility(View.GONE);
                     txtSearchGroup.setText("");
+
+                    // Save the group ID to local storage
+                    userSession.saveGroupId(groupId);
+
                     checkIfUserInGroup(); // Re-check and update UI
                 } else {
                     Toast.makeText(New_Group.this, "Failed to join group", Toast.LENGTH_SHORT).show();
@@ -464,4 +486,20 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
                 .setNegativeButton("Cancel", null)
                 .show();
     }
+
+
+    // TODO FOR TESTING
+    private void displayCurrentGroupId() {
+        String userSessionGroupId = userSession.getGroupId();
+        String userSessionUserId = userSession.getUserId();
+
+        StringBuilder message = new StringBuilder();
+        message.append("UserSession groupId: ");
+        message.append(userSessionGroupId != null ? userSessionGroupId : "null");
+        message.append("\n");
+        message.append("UserSession userId: ");
+        message.append(userSessionUserId != null ? userSessionUserId : "null");
+        txtTestGroupId.setText(message.toString());
+    }
+    // END TODO FOR TESTING
 }
