@@ -37,10 +37,6 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
     private TextView txtNoGroups, txtUserInGroupMessage, txtGroupIdDisplay, txtMemberCountDisplay;
     private LinearLayout searchSection, createSection, noGroupContainer, hasGroupContainer;
 
-    // TODO FOR TESTING
-    private Button btnTestGetGroupId;
-    private TextView txtTestGroupId;
-    // END TODO FOR TESTING
 
     private GroupAdapter searchAdapter;
     private GroupAdapter myGroupsAdapter;
@@ -130,14 +126,6 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
         noGroupContainer = findViewById(R.id.no_group_container);
         hasGroupContainer = findViewById(R.id.has_group_container);
 
-        // TODO FOR TESTING
-        // Initialize test elements
-        btnTestGetGroupId = findViewById(R.id.btn_test_get_group_id);
-        txtTestGroupId = findViewById(R.id.txt_test_group_id);
-
-        // Set up test button click listener
-        btnTestGetGroupId.setOnClickListener(v -> displayCurrentGroupId());
-        // END TODO FOR TESTING
     }
 
     @Override
@@ -488,18 +476,5 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
     }
 
 
-    // TODO FOR TESTING
-    private void displayCurrentGroupId() {
-        String userSessionGroupId = userSession.getGroupId();
-        String userSessionUserId = userSession.getUserId();
 
-        StringBuilder message = new StringBuilder();
-        message.append("UserSession groupId: ");
-        message.append(userSessionGroupId != null ? userSessionGroupId : "null");
-        message.append("\n");
-        message.append("UserSession userId: ");
-        message.append(userSessionUserId != null ? userSessionUserId : "null");
-        txtTestGroupId.setText(message.toString());
-    }
-    // END TODO FOR TESTING
 }
