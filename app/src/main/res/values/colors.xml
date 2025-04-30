@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="text_secondary">#757575</color> <!-- 次文本颜色 -->
+    <color name="warning_red">#FF5252</color> <!-- 警告红色 -->
+    <color name="text_expired">#9E9E9E</color> <!-- 过期文本颜色 -->
+    <color name="expired_bg">#F5F5F5</color> <!-- 过期背景色 -->
 </resources>
