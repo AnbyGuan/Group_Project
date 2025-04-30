@@ -37,11 +37,6 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
     private TextView txtNoGroups, txtUserInGroupMessage, txtGroupIdDisplay, txtMemberCountDisplay;
     private LinearLayout searchSection, createSection, noGroupContainer, hasGroupContainer;
 
-    // TODO FOR TESTING
-    private Button btnTestGetGroupId;
-    private TextView txtTestGroupId;
-    // END TODO FOR TESTING
-
     private GroupAdapter searchAdapter;
     private GroupAdapter myGroupsAdapter;
     private UserSession userSession;
@@ -72,11 +67,22 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
         recyclerSearchResults.setLayoutManager(new LinearLayoutManager(this));
         recyclerMyGroups.setLayoutManager(new LinearLayoutManager(this));
 
+        // Add visual effects
+        recyclerSearchResults.setHasFixedSize(true);
+        recyclerMyGroups.setHasFixedSize(true);
+
+        // Apply card elevation effect
+        recyclerSearchResults.setElevation(8f);
+        recyclerMyGroups.setElevation(8f);
+
         searchAdapter = new GroupAdapter(this, false);
         myGroupsAdapter = new GroupAdapter(this, true);
 
         recyclerSearchResults.setAdapter(searchAdapter);
         recyclerMyGroups.setAdapter(myGroupsAdapter);
+
+        // Initially hide search results
+        recyclerSearchResults.setVisibility(View.GONE);
 
         // Setup button listeners
         btnSearch.setOnClickListener(v -> searchGroups());
@@ -84,26 +90,6 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
         btnViewGroup.setOnClickListener(v -> {
             if (!currentGroupId.isEmpty()) {
                 viewGroupDetails(currentGroupId);
-            }
-        });
-
-        // Setup real-time search
-        txtSearchGroup.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0 && !userAlreadyInGroup) {
-                    searchGroups();
-                } else {
-                    recyclerSearchResults.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
             }
         });
 
@@ -130,14 +116,41 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
         noGroupContainer = findViewById(R.id.no_group_container);
         hasGroupContainer = findViewById(R.id.has_group_container);
 
-        // TODO FOR TESTING
-        // Initialize test elements
-        btnTestGetGroupId = findViewById(R.id.btn_test_get_group_id);
-        txtTestGroupId = findViewById(R.id.txt_test_group_id);
+        // Improve RecyclerViews appearance
+        int recyclerViewHeight = getResources().getDisplayMetrics().heightPixels / 3; // 1/3 of screen height
 
-        // Set up test button click listener
-        btnTestGetGroupId.setOnClickListener(v -> displayCurrentGroupId());
-        // END TODO FOR TESTING
+        // Set height for search results RecyclerView
+        LinearLayout.LayoutParams searchResultsParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, recyclerViewHeight);
+        searchResultsParams.setMargins(0, 16, 0, 16);
+        recyclerSearchResults.setLayoutParams(searchResultsParams);
+
+        // Set height for my groups RecyclerView
+        LinearLayout.LayoutParams myGroupsParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, recyclerViewHeight);
+        myGroupsParams.setMargins(0, 16, 0, 16);
+        recyclerMyGroups.setLayoutParams(myGroupsParams);
+
+        // Add item decoration for better spacing
+        recyclerSearchResults.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(android.graphics.Rect outRect, View view, RecyclerView parent,
+                    RecyclerView.State state) {
+                outRect.bottom = 16;
+                outRect.left = 16;
+                outRect.right = 16;
+            }
+        });
+
+        recyclerMyGroups.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(android.graphics.Rect outRect, View view, RecyclerView parent,
+                    RecyclerView.State state) {
+                outRect.bottom = 16;
+                outRect.left = 16;
+                outRect.right = 16;
+            }
+        });
     }
 
     @Override
@@ -194,6 +207,7 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
 
         String query = txtSearchGroup.getText().toString().trim();
         if (query.isEmpty()) {
+            Toast.makeText(this, "Please enter a group ID to search", Toast.LENGTH_SHORT).show();
             recyclerSearchResults.setVisibility(View.GONE);
             return;
         }
@@ -487,19 +501,4 @@ public class New_Group extends AppCompatActivity implements GroupAdapter.OnGroup
                 .show();
     }
 
-
-    // TODO FOR TESTING
-    private void displayCurrentGroupId() {
-        String userSessionGroupId = userSession.getGroupId();
-        String userSessionUserId = userSession.getUserId();
-
-        StringBuilder message = new StringBuilder();
-        message.append("UserSession groupId: ");
-        message.append(userSessionGroupId != null ? userSessionGroupId : "null");
-        message.append("\n");
-        message.append("UserSession userId: ");
-        message.append(userSessionUserId != null ? userSessionUserId : "null");
-        txtTestGroupId.setText(message.toString());
-    }
-    // END TODO FOR TESTING
 }
