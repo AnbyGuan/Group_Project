@@ -10,19 +10,102 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_marginTop="-3dp"
+        android:alpha="0.2"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg"
-        android:alpha="0.2"/>
+        android:src="@drawable/bg" />
+
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
         android:text="Add Menu"
-        android:textSize="24sp"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/menu_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white"
+                android:hint="Menu_name"
+                android:inputType="text"
+                android:padding="10dp" />
+
+            <!-- 选择所有者输入框 -->
+            <EditText
+                android:id="@+id/menu_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white"
+                android:hint="Food"
+                android:inputType="text"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/menu_steps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white"
+                android:hint="Step"
+                android:inputType="text"
+                android:padding="10dp" />
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="choose the group:"
+                android:padding="10dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <RadioGroup
+                    android:id="@+id/group_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="load..." />
 
 
+                </RadioGroup>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_blue_dark"
+                android:text="ADD MENU"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -41,7 +41,7 @@ public class My_Menu extends AppCompatActivity {
             return;
         }
         currentUserId = userSession.getUserId();
-      //  currentUserId = "uid1";  //测试数据
+        // currentUserId = "uid1";  //测试数据
 
         DatabaseHelper.isUserInAnyGroup(currentUserId, new FirebaseCallback<Boolean>() {
             @Override
@@ -97,7 +97,7 @@ public class My_Menu extends AppCompatActivity {
                 for (Map.Entry<String, MenuItem> entry : data.entrySet()) {
                     String menuId = entry.getKey();
                     MenuItem menu = entry.getValue();
-                    Log.d(TAG, "🍳 菜单 ID=" + menuId + "，名称=" + menu.name + "，食材=" + menu.ingredients);
+                    Log.d(TAG, "🍳 menu ID=" + menuId + "，name=" + menu.name + "，food=" + menu.ingredients);
                     boolean isDuplicate = false;
                     for (MenuItem existingMenu : menuItemList) {
                         if (existingMenu.name.equals(menu.name)) {
@@ -109,7 +109,7 @@ public class My_Menu extends AppCompatActivity {
                     if (!isDuplicate) {
                         menuItemList.add(menu);
                     } else {
-                        Log.i(TAG, "❌ 重复菜单：" + menu.name);
+                        Log.i(TAG, "❌ The menu is duplicated：" + menu.name);
                     }
                 }
                 Log.i(TAG, "menuItemList : " + menuItemList);
@@ -124,7 +124,7 @@ public class My_Menu extends AppCompatActivity {
 
             @Override
             public void onFailure(Exception e) {
-                Log.e(TAG, "❌ 获取失败：" + e.getMessage());
+                Log.e(TAG, "❌ fail to get：" + e.getMessage());
             }
         });
     }
@@ -137,7 +137,7 @@ public class My_Menu extends AppCompatActivity {
                 for (Map.Entry<String, FoodItem> entry : data.entrySet()) {
                     String foodId = entry.getKey();
                     FoodItem food = entry.getValue();
-                    Log.i(TAG, "getFoodsByMenu  foodId=" + foodId + "，名称=" + food.name + "，所有人=" + food.owners);
+                    Log.i(TAG, "getFoodsByMenu  foodId=" + foodId + "，name=" + food.name + "，food_owners=" + food.owners);
                     for (int i = 0; i < food.owners.size(); i++) {
                         //如果食物的所有人包含当前用户，则添加到 foodItemList 中
                         if (food.owners.get(i).equals(currentUserId)) {
@@ -175,4 +175,23 @@ public class My_Menu extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DatabaseHelper.isUserInAnyGroup(currentUserId, new FirebaseCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean isInGroup) {
+                //是否已经在组中
+                Log.i(TAG, "isInGroup: " + isInGroup);
+                if (isInGroup) {
+                    getUserGroups();
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
+    }
 }
