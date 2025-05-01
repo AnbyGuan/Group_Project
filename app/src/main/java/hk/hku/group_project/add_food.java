@@ -211,7 +211,7 @@ public class add_food extends AppCompatActivity {
             FoodItem newFood = new FoodItem(name, owners, expiry, storage, price);
 
             // 提交到数据库
-            DatabaseHelper.addFood("group123", newFood, new FirebaseCallback<Boolean>() {
+            DatabaseHelper.addFood(currentGroupId, newFood, new FirebaseCallback<Boolean>() {
                 @Override
                 public void onSuccess(Boolean data) {
                     Toast.makeText(add_food.this, "添加成功", Toast.LENGTH_SHORT).show();
