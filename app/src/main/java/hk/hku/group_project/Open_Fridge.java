@@ -44,7 +44,8 @@ public class Open_Fridge extends AppCompatActivity {
     //private final List<FoodItem> filteredList = new ArrayList<>();
 
     private UserSession userSession;
-    private String currentGroupId = "group123";
+    private String currentGroupId;
+    //private String currentGroupId = "group123";
 
     private static final String TAG = "Open_Fridge";
 
@@ -60,6 +61,10 @@ public class Open_Fridge extends AppCompatActivity {
         txtSearch = findViewById(R.id.txt_Search);
         foodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //
+        userSession = new UserSession(getApplicationContext());
+        currentGroupId = userSession.getUserId();
+
         // 初始化视图
         initViews();
 
@@ -72,6 +77,7 @@ public class Open_Fridge extends AppCompatActivity {
     }
 
     private void initViews() {
+        Log.d(TAG,currentGroupId);
         foodRecyclerView = findViewById(R.id.foodRecyclerView);
         txtSearch = findViewById(R.id.txt_Search);
 
