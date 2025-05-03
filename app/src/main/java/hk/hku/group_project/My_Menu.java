@@ -41,7 +41,7 @@ public class My_Menu extends AppCompatActivity {
             return;
         }
         currentUserId = userSession.getUserId();
-        // currentUserId = "uid1";  //测试数据
+        //currentUserId = "uid1";  //测试数据
 
         DatabaseHelper.isUserInAnyGroup(currentUserId, new FirebaseCallback<Boolean>() {
             @Override
@@ -98,6 +98,8 @@ public class My_Menu extends AppCompatActivity {
                     String menuId = entry.getKey();
                     MenuItem menu = entry.getValue();
                     Log.d(TAG, "🍳 menu ID=" + menuId + "，name=" + menu.name + "，food=" + menu.ingredients);
+
+                    menu.setMenuId(menuId); // 👈 设置 menuId
                     boolean isDuplicate = false;
                     for (MenuItem existingMenu : menuItemList) {
                         if (existingMenu.name.equals(menu.name)) {
@@ -118,7 +120,7 @@ public class My_Menu extends AppCompatActivity {
                     Log.i(TAG, "MenuAdapter  foodItem: " + foodItem.name);
                 }
                 checkMenuItemsReadiness(menuItemList, foodItemList);
-                adapter = new MenuAdapter(getApplicationContext(), menuItemList);
+                adapter = new MenuAdapter(getApplicationContext(), menuItemList, groupId);
                 listView.setAdapter(adapter);
             }
 
@@ -178,11 +180,15 @@ public class My_Menu extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // 清空之前的菜单和食材列表
+        menuItemList.clear();
+        foodItemList.clear();
+        // 重新加载数据
         DatabaseHelper.isUserInAnyGroup(currentUserId, new FirebaseCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean isInGroup) {
                 //是否已经在组中
-                Log.i(TAG, "isInGroup: " + isInGroup);
+                Log.i(TAG, "isInGroup onResume: " + isInGroup);
                 if (isInGroup) {
                     getUserGroups();
                 }
@@ -194,4 +200,6 @@ public class My_Menu extends AppCompatActivity {
             }
         });
     }
+
+
 }
