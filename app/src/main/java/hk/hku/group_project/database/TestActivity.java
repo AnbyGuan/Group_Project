@@ -34,6 +34,13 @@ public class TestActivity extends AppCompatActivity {
         btnGetGroupMembers = findViewById(R.id.btn_get_group_members);
         btnInsertSamples = findViewById(R.id.btn_insert_sample);
         txtResult = findViewById(R.id.txt_result);
+        Button btnDeleteMenu = findViewById(R.id.btn_delete_menu); // 新按钮
+
+        btnDeleteMenu.setOnClickListener(v -> {
+            showResult("🗑️ 正在删除菜单...");
+            DatabaseTest.testDeleteMenu("22", "-OP50wOBJZEFoIVHcp26"); // 替换成真实的 groupId 和 menuId
+        });
+
 
         // 各功能测试
         btnAddFood.setOnClickListener(v -> {

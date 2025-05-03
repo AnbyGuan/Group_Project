@@ -115,6 +115,26 @@ public class DatabaseHelper {
         });
     }
 
+    // 删除菜单
+    public static void deleteMenu(String groupId, String menuId, FirebaseCallback<Boolean> callback) {
+        DatabaseReference ref = db.getReference("menus").child(groupId).child(menuId);
+
+        // Step 1: 检查该菜单是否存在
+        ref.get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                // Step 2: 存在就执行删除
+                ref.removeValue()
+                        .addOnSuccessListener(aVoid -> callback.onSuccess(true))
+                        .addOnFailureListener(callback::onFailure);
+            } else {
+                // 不存在，直接返回 false
+                callback.onSuccess(false);
+            }
+        }).addOnFailureListener(callback::onFailure);
+    }
+
+
+
     // 创建小组（含多个 UID）
     public static void createGroup(String groupId, List<String> memberUids, FirebaseCallback<Boolean> callback) {
         DatabaseReference ref = db.getReference("groups").child(groupId).child("members");

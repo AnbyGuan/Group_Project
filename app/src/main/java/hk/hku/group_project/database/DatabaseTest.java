@@ -110,6 +110,24 @@ public class DatabaseTest {
             }
         });
     }
+    public static void testDeleteMenu(String groupId, String menuId) {
+        DatabaseHelper.deleteMenu(groupId, menuId, new FirebaseCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                if (result) {
+                    Log.d("TestMenu", "✅ 成功删除菜单 ID=" + menuId);
+                } else {
+                    Log.w("TestMenu", "⚠️ 删除失败，但未抛异常（可能 ID 不存在？）");
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("TestMenu", "❌ 删除菜单失败：" + e.getMessage());
+            }
+        });
+    }
+
 
     public static void testCreateGroup() {
         DatabaseHelper.createGroup("group123", Arrays.asList("uid1", "uid2", "uid3"), new FirebaseCallback<Boolean>() {
