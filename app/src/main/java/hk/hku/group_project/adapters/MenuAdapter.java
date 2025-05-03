@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -18,15 +19,21 @@ import java.util.List;
 
 import hk.hku.group_project.MenuItem;
 import hk.hku.group_project.R;
+import hk.hku.group_project.database.DatabaseHelper;
+import hk.hku.group_project.database.FirebaseCallback;
 
 public class MenuAdapter extends ArrayAdapter<MenuItem> {
     private Context context;
     private List<MenuItem> menuItemList;
 
-    public MenuAdapter(Context context, List<MenuItem> menuItemList) {
+    private String groupID;
+
+
+    public MenuAdapter(Context context, List<MenuItem> menuItemList, String groupID) {
         super(context, 0, menuItemList);
         this.context = context;
         this.menuItemList = menuItemList;
+        this.groupID = groupID;
     }
 
     @SuppressLint("SetTextI18n")
@@ -36,9 +43,10 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_menuitem, parent, false);
         }
-
         MenuItem menuItem = menuItemList.get(position);
         Log.i("MenuAdapter", "getView  menuItem: " + menuItem.toString());
+
+
 
         TextView name = convertView.findViewById(R.id.menu_name);
         TextView ingredients = convertView.findViewById(R.id.menu_ingredients);
@@ -50,9 +58,9 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
         ingredients.setText("原料列表: " + menuItem.getIngredients());
         steps.setText("步骤: " + menuItem.getSteps());
         delete.setOnClickListener(v -> {
-            menuItemList.remove(position);
-            notifyDataSetChanged();
-
+            deleteMenu(menuItem, groupID); // 先请求删除
+            menuItemList.remove(position); // 本地移除
+            notifyDataSetChanged(); // 通知 UI 更新
         });
         if (!menuItem.isReady()) {
             lin_bg.setBackgroundColor(Color.GRAY);
@@ -61,4 +69,31 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
 
         return convertView;
     }
+
+    public void deleteMenu(MenuItem menuItem, String groupId) {
+        String menuId = menuItem.getMenuId();
+        if (menuId == null) {
+            Toast.makeText(context, "菜单ID为空，无法删除", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        DatabaseHelper.deleteMenu(groupId, menuId, new FirebaseCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean isSuccess) {
+                if (isSuccess) {
+                    Toast.makeText(context, "菜单删除成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "删除失败", Toast.LENGTH_SHORT).show();
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Toast.makeText(context, "删除出错：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
+            }
+        });
+    }
+
+
 }
